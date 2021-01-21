@@ -82,12 +82,25 @@ def is_validated_english_sentence(user_input):
         >>> mc.is_validated_english_sentence("This is Gachon University.")
         True
     """
+    number = "0123456789"
+    special_character = '_@#$%^&*()-+=[]{}\"\';:\\|`~'
+    basis = ".,!? "
+
+    check1 = not any(elem in number for elem in user_input)
+    check2 = not any(elem in special_character for elem in user_input)
+    check3 = False if len(re.sub("[.,!? ]", "", user_input)) == 0 else True
+
+    result = check1 and check2 and check3
     # ===Modify codes below=============
     # 조건에 따라 변환되어야 할 결과를 result 변수에 할당 또는 필요에 따라 자유로운 수정
-    result = None
 
     return result
     # ==================================
+
+
+def main2():
+    user_input = "This is Gachon University."
+    print(is_validated_english_sentence(user_input))
 
 
 def is_validated_morse_code(user_input):
@@ -115,7 +128,11 @@ def is_validated_morse_code(user_input):
     """
     # ===Modify codes below=============
     # 조건에 따라 변환되어야 할 결과를 result 변수에 할당 또는 필요에 따라 자유로운 수정
-    result = None
+    basis = "-., "
+    check1 = all(elem in basis for elem in user_input)
+    check2 = all(elem in get_morse_code_dict().values()
+                 for elem in user_input.split())
+    result = check1 and check2
 
     return result
     # ==================================
@@ -140,7 +157,7 @@ def get_cleaned_english_sentence(raw_english_sentence):
     """
     # ===Modify codes below=============
     # 조건에 따라 변환되어야 할 결과를 result 변수에 할당 또는 필요에 따라 자유로운 수정
-    result = re.sub()
+    result = re.sub("[.,!?]", "", raw_english_sentence.strip())
 
     return result
     # ==================================
@@ -170,7 +187,10 @@ def decoding_character(morse_character):
     # ===Modify codes below=============
     # 조건에 따라 변환되어야 할 결과를 result 변수에 할당 또는 필요에 따라 자유로운 수정
     morse_code_dict = get_morse_code_dict()
-    result = None
+    for char, morse_char in morse_code_dict.items():
+        if morse_char == morse_character:
+            result = char
+            break
 
     return result
     # ==================================
@@ -225,7 +245,8 @@ def decoding_sentence(morse_sentence):
     """
     # ===Modify codes below=============
     # 조건에 따라 변환되어야 할 결과를 result 변수에 할당 또는 필요에 따라 자유로운 수정
-    result = None
+    result = "".join(decoding_character(elem) if elem !=
+                     "" else " " for elem in morse_sentence.split(" "))
 
     return result
     # ==================================
@@ -269,4 +290,4 @@ def main():
 
 
 if __name__ == "__main__":
-    main()
+    main2()
