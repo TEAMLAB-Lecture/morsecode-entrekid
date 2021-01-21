@@ -298,7 +298,7 @@ def encoding_sentence(english_sentence):
     result = " ".join(
         [
             encoding_character(elem) if elem != " " else ""
-            for elem in input_sentence.upper()
+            for elem in get_cleaned_english_sentence(input_sentence.upper().strip())
         ]
     )
 
